@@ -1,12 +1,20 @@
 # ucsspell
 
+**Kísérleti projekt a Hunspell továbbfejlesztésére.**  
+Az ucsspell célja a Hunspell Unicode-támogatásának kiterjesztése, különösen a **Supplementary Multilingual Plane (SMP)** karaktertartományra, hogy olyan történelmi írásokat is kezelhessen, mint az **Old Hungarian**, az **Old Turkic** és az **Old Persian**.  
+A fejlesztés eredményei később a Hunspell főágába kerülnek be.
+
+_For English readers → scroll down._
+
+---
+
 **ucsspell** is an experimental, Unicode-extended continuation of the [Hunspell](https://github.com/hunspell/hunspell) project.  
 It was created to provide full support for the **Supplementary Multilingual Plane (SMP)** and other Unicode code points beyond the Basic Multilingual Plane (BMP).
 
 ## Background
 
 Hunspell was originally designed around UTF-8 text processing, but internally relied on 16-bit character handling, which limits direct support for Unicode characters outside the BMP (e.g. historical scripts and rare symbols).  
-To handle modern and historical scripts encoded in the SMP — such as **Old Turkic**, **Old Hungarian**,  and **Old Persian** — an extended Unicode-aware infrastructure became necessary.
+To handle modern and historical scripts encoded in the SMP — such as **Old Hungarian**, **Old Turkic**, and **Old Persian** — an extended Unicode-aware infrastructure became necessary.
 
 The **ucsspell** project introduces this capability while maintaining compatibility with existing Hunspell dictionaries and tools.
 
@@ -35,10 +43,17 @@ The **ucsspell** project introduces this capability while maintaining compatibil
 - Allow historical and non-BMP scripts to be processed without data loss.  
 - Serve as a testing ground for future integration into upstream Hunspell and LibreOffice.
 
+## Experimental Status
+
+This is a **public experimental project**.  
+All new Unicode and ICU-based features are being developed and tested here first.  
+After validation and community review, these improvements are planned to be integrated into the main [Hunspell](https://github.com/hunspell/hunspell) project.
+
 ## Build Instructions
 
+
 ```bash
-git clone https://github.com/<yourname>/ucsspell.git
+git clone https://github.com/kovacshviktor/ucsspell.git
 cd ucsspell
 git submodule update --init --recursive
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
