@@ -132,20 +132,20 @@ std::string& u16_u8(std::string& dest, const std::vector<w_char>& src) {
   while (u2 < u2_max) {
     signed char u8;
     if (((u2->h) >= 0xd8) && ((u2->h) < 0xdc)){
-        uint32_t U; //Unicode utf-32 point
-        uint16_t H; //Hi surrogate
-        uint16_t L; //Lo surrogate
+        unsigned long U; //Unicode utf-32 point
+        unsigned short H; //Hi surrogate
+        unsigned short L; //Lo surrogate
         //prepare hight surrogate
-        H = (static_cast<uint16_t>(u2->h));
-        H = (H << 8) | (static_cast<uint16_t>(u2->l));
+        H = (static_cast<unsigned short>(u2->h));
+        H = (H << 8) | (static_cast<unsigned short>(u2->l));
         H = H - 0xd800;
         ++u2;
         if (((u2->h) >= 0xdc) && ((u2->h) <= 0xdf)){
           //prepare low surrogate
-          L = (static_cast<uint16_t>(u2->h));
-          L = (L << 8 ) | (static_cast<uint16_t>(u2->l));
+          L = (static_cast<unsigned short>(u2->h));
+          L = (L << 8 ) | (static_cast<unsigned short>(u2->l));
           L = L - 0xdc00;
-          U = (static_cast<uint32_t>(H << 10)) | (static_cast<uint32_t>(L));
+          U = (static_cast<unsigned long>(H << 10)) | (static_cast<unsigned long>(L));
           U = U + 0x10000; 
           u8 = (static_cast<signed char>(0xF0 | ((U >> 18) & 0x07)));
           dest.push_back(u8);
@@ -282,23 +282,23 @@ int u8_u16(std::vector<w_char>& dest, const std::string& src, bool only_convert_
       default: {  // 4 or more byte UTF-8 codes
         if (((*u8) & 0xf0) <= 7){
           // 4-byte UTF-8 codes
-          uint32_t  U;//Unicode point
-          uint16_t H;//utf16 hi surrogate 
-          uint16_t L;//utf16 lo surrogate
-          U =  (static_cast<uint32_t>(*u8) & 0x7) << 18;
+          unsigned long  U;//Unicode point
+          unsigned short H;//utf16 hi surrogate 
+          unsigned short L;//utf16 lo surrogate
+          U =  (static_cast<unsigned long>(*u8) & 0x7) << 18;
           ++u8;
             if ((*u8 & 0xc0) == 0x80){
               U = U | (*u8 & 0x3f) << 12 ;
               ++u8;
               if ((*u8 & 0xc0) == 0x80){
-                U = U | (static_cast<uint32_t>(*u8) & 0x3f) << 6;
+                U = U | (static_cast<unsigned long>(*u8) & 0x3f) << 6;
                 ++u8;
                 if ((*u8 & 0xc0) == 0x80){
-                  U = U | (static_cast<uint32_t>(*u8) & 0x3f);
+                  U = U | (static_cast<unsigned long>(*u8) & 0x3f);
                   ++u8;
                   U = U - 0x10000;
-                  H = 0xd800 + (static_cast<uint16_t>(U >> 10));
-                  L = 0xdc00 + (static_cast<uint16_t>(U & 0x3FF));
+                  H = 0xd800 + (static_cast<unsigned short>(U >> 10));
+                  L = 0xdc00 + (static_cast<unsigned short>(U & 0x3FF));
                   u2.h = (static_cast<unsigned char>((H & 0xff00) >> 8));
                   u2.l = (static_cast<unsigned char>(H & 0x00ff));
                   *u16++ = u2;
@@ -2480,7 +2480,7 @@ const struct cs_info* get_current_cs(const std::string& es) {
       auto src2 = MakeSpan(&uniCased, 1);
       auto dst2 = MakeSpan(destination);
 
-      uint32_t result;
+      unsigned long result;
       size_t read;
       size_t written;
       Tie(result, read, written) =
