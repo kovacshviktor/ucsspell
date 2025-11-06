@@ -101,6 +101,7 @@ class AffixMgr {
   std::string encoding;
   const struct cs_info* csconv;
   int utf8;
+  int ext_utf8;
   int complexprefixes;
   FLAG compoundflag;
   FLAG compoundbegin;
@@ -326,6 +327,7 @@ class AffixMgr {
   const std::string& get_version() const;
   int have_contclass() const;
   int get_utf8() const;
+  int get_ext_utf8() const;
   int get_complexprefixes() const;
   char* get_suffixed(char) const;
   int get_maxngramsugs() const;
