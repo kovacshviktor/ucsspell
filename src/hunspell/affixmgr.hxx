@@ -82,6 +82,9 @@
 #include "phonet.hxx"
 #include "replist.hxx"
 
+
+
+
 // check flag duplication
 #define dupSFX (1 << 0)
 #define dupPFX (1 << 1)
@@ -100,6 +103,7 @@ class AffixMgr {
   std::string trystring;
   std::string encoding;
   const struct cs_info* csconv;
+  int non_utf32_allowed;
   int utf8;
   int ext_utf8;
   int complexprefixes;
@@ -343,7 +347,6 @@ class AffixMgr {
   int get_checksharps(void) const;
   std::string encode_flag(unsigned short aflag) const;
   int get_fullstrip() const;
-
  private:
   int parse_file(const char* affpath, const char* key);
   bool parse_flag(const std::string& line, unsigned short* out, FileMgr* af);

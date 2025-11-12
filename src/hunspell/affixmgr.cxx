@@ -96,6 +96,7 @@ AffixMgr::AffixMgr(const char* affpath,
   // register hash manager and load affix data from aff file
   csconv = NULL;
   utf8 = 0;
+  ext_utf8 = 0;
   complexprefixes = 0;
   parsedmaptable = false;
   parsedbreaktable = false;
@@ -267,6 +268,8 @@ void AffixMgr::finishFileMgr(FileMgr* afflst) {
   process_sfx_tree_to_list();
 }
 
+
+
 // read in aff file and build up prefix and suffix entry objects
 int AffixMgr::parse_file(const char* affpath, const char* key) {
 
@@ -301,7 +304,7 @@ int AffixMgr::parse_file(const char* affpath, const char* key) {
       // old Hunspell versions
       if (line.compare(0, 3, "\xEF\xBB\xBF", 3) == 0) {
         line.erase(0, 3);
-      }
+      }  
     }
 
     /* parse in the keyboard string */
@@ -328,6 +331,8 @@ int AffixMgr::parse_file(const char* affpath, const char* key) {
       }
       if (encoding == "UTF-8") {
         utf8 = 1;
+      }else if(encoding == "EXT-UTF-8"){
+        ext_utf8 = 1;
       }
     }
 
