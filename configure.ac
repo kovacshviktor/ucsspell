@@ -30,6 +30,22 @@ AX_CXX_COMPILE_STDCXX_11([noext], [optional])
 AM_ICONV
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
 
+dnl -------------------------
+dnl Check for bundled ICU submodule
+dnl -------------------------
+ICU_SUBMODULE_DIR="$srcdir/external/icu"
+ICU4C_SOURCE_DIR="$ICU_SUBMODULE_DIR/icu4c"
+
+AS_IF([test ! -d "$ICU4C_SOURCE_DIR" -o ! -f "$ICU4C_SOURCE_DIR/source/common/unicode/utypes.h"], [
+  AC_MSG_ERROR([ICU submodule not found or not initialized.
+Please run:
+  git submodule update --init --recursive --progress
+and then re-run ./configure.])
+])
+
+AC_SUBST([ICU_SUBMODULE_DIR])
+AC_SUBST([ICU4C_SOURCE_DIR])
+
 # Checks for header files.
 AC_CHECK_HEADERS([locale.h langinfo.h])
 

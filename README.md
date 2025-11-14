@@ -28,13 +28,36 @@ The **ucsspell** project introduces this capability while maintaining compatibil
   The project integrates [ICU4C (International Components for Unicode)](https://github.com/unicode-org/icu) for all Unicode conversions, case-folding, and script-aware operations.  
   This ensures correct handling of surrogate pairs and SMP code points across all supported platforms.
 
+### Cloning with ICU submodule (recommended with verbose mode)
+
+The ICU submodule is large, so it is recommended to fetch it in verbose mode
+to see download progress:
+
+git clone --recurse-submodules --progress https://github.com/kovacshviktor/ucsspell
+cd ucsspell
+git submodule update --init --recursive --progress
+
+
 - **Language extension: hu-Hung**  
   Adds `LANG hu-Hung` (or `hu-Hung-HU`) as a new language tag for Old Hungarian.  
   This allows proper distinction between modern Hungarian (`hu-HU`) and its historical orthography.
 
-- **Cross-platform build system**  
-  Uses **CMake** for unified builds on Linux, Windows (MSYS2/MinGW, MSVC optional), and macOS.  
-  The ICU library is included as a git submodule for reproducible source-based builds.
+- ## Build systems
+
+This project currently supports two build systems:
+
+- **Autotools + Make** (recommended on Linux and macOS)
+- **CMake** (recommended on Windows, optional on other platforms)
+
+The ICU library is included as a git submodule for reproducible source-based builds.
+
+### 1. Autotools build (Linux, macOS)
+
+./autogen.sh       # or: autoreconf -vfi
+./configure
+make -j$(nproc)
+sudo make install   # optional
+
 
 ## Goals
 
@@ -49,12 +72,3 @@ This is a **public experimental project**.
 All new Unicode and ICU-based features are being developed and tested here first.  
 After validation and community review, these improvements are planned to be integrated into the main [Hunspell](https://github.com/hunspell/hunspell) project.
 
-## Build Instructions
-
-
-```bash
-git clone https://github.com/kovacshviktor/ucsspell.git
-cd ucsspell
-git submodule update --init --recursive
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -j
