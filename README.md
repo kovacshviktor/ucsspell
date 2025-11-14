@@ -37,7 +37,6 @@ git clone --recurse-submodules --progress https://github.com/kovacshviktor/ucssp
 cd ucsspell
 git submodule update --init --recursive --progress
 
-
 - **Language extension: hu-Hung**  
   Adds `LANG hu-Hung` (or `hu-Hung-HU`) as a new language tag for Old Hungarian.  
   This allows proper distinction between modern Hungarian (`hu-HU`) and its historical orthography.
@@ -57,7 +56,6 @@ The ICU library is included as a git submodule for reproducible source-based bui
 ./configure
 make -j$(nproc)
 sudo make install   # optional
-
 
 ## Goals
 
